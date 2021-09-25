@@ -258,7 +258,9 @@ public struct CodeScannerView: UIViewControllerRepresentable {
             delegate?.reset()
 
             if (captureSession?.isRunning == false) {
-                captureSession.startRunning()
+                DispatchQueue.global(qos: .userInitiated).async {
+                    self.captureSession.startRunning()
+                }
             }
         }
 
@@ -278,7 +280,9 @@ public struct CodeScannerView: UIViewControllerRepresentable {
             super.viewDidDisappear(animated)
 
             if (captureSession?.isRunning == true) {
-                captureSession.stopRunning()
+                DispatchQueue.global(qos: .userInitiated).async {
+                    self.captureSession.stopRunning()
+                }
             }
 
             NotificationCenter.default.removeObserver(self)
